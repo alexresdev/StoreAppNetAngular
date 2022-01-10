@@ -3,3 +3,4 @@ bin
 appsettings.json
 API/.config/dotnet-tools.json
 *.db
+*.rdb
