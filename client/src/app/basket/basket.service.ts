@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { findIndex, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Basket, IBasket, IBasketItem, IBasketTotals } from '../shared/models/basket';
 import { IDeliveryMethod } from '../shared/models/deliveryMethod';
@@ -50,10 +50,7 @@ export class BasketService {
 
   addItemToBasket(item: IProduct, quantity = 1) {
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity);
-    let basket = this.getCurrentBasketValue();
-    if (basket === null) {
-      basket = this.createBasket();
-    }
+    const basket = this.getCurrentBasketValue() ?? this.createBasket();
     basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     this.setBasket(basket);
   }

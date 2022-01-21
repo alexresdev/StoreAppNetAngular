@@ -25,4 +25,3 @@ export interface IBasketTotals {
     subtotal: number;
     total: number;
 }
-
