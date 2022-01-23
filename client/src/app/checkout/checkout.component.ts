@@ -17,12 +17,13 @@ export class CheckoutComponent implements OnInit {
   constructor(private fb: FormBuilder, private accountService: AccountService, private basketService: BasketService) { }
 
   ngOnInit() {
-    this.createChecoutForm();
+    this.createCheckoutForm();
     this.getAddressFormValues();
+    this.getDeliveryMethodValue();
     this.basketTotals$ = this.basketService.basketTotal$;
   }
 
-  createChecoutForm() {
+  createCheckoutForm() {
     this.checkoutForm = this.fb.group({
     addressForm: this.fb.group({
       firstName: [null, Validators.required],
@@ -49,5 +50,12 @@ export class CheckoutComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  getDeliveryMethodValue() {
+    const basket = this.basketService.getCurrentBasketValue();
+    if (basket.deliveryMethodId !== null) {
+      this.checkoutForm.get('deliveryForm').get('deliveryMethod').patchValue(basket.deliveryMethodId.toString());
+    }
   }
 }
